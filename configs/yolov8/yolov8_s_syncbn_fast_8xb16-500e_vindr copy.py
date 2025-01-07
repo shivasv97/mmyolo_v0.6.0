@@ -2,9 +2,8 @@ _base_ = ['../_base_/default_runtime.py', '../_base_/det_p5_tta.py']
 
 # ========================Frequently modified parameters======================
 # -----data related-----
-# data_root = '/anvil/projects/x-med220025/datasets/vindr_cxr/1.0.0/'  # Root path of data
+data_root = '/anvil/projects/x-med220025/datasets/vindr_cxr/1.0.0/'  # Root path of data
 # Path of train annotation file
-data_root = '/scratch/ssenth21/VinDr-CXR/physionet.org/files/vindr-cxr/1.0.0/'
 train_ann_file = 'annotations/VinDrCXR_Kaggle_14Diseases_TRAIN.json'
 train_data_prefix = 'train_jpeg/'  # Prefix of train image path
 # Path of val annotation file
@@ -14,7 +13,7 @@ val_data_prefix = 'test_jpeg/'  # Prefix of val image path
 class_name = ( 'Aortic enlargement', 'Atelectasis', 'Calcification', 'Cardiomegaly', 'Consolidation', 'ILD', 'Infiltration', 'Lung Opacity', 'Nodule/Mass', 'Other lesion', 'Pleural effusion', 'Pleural thickening', 'Pneumothorax', 'Pulmonary fibrosis')
 num_classes = len(class_name)  # Number of classes for classification
 # Batch size of a single GPU during training
-train_batch_size_per_gpu = 16
+train_batch_size_per_gpu = 2
 # train_batch_size_per_gpu = 16
 # Worker to pre-fetch data for each single GPU during training
 train_num_workers = 8
@@ -90,7 +89,7 @@ loss_dfl_weight = 1.5 / 4
 lr_factor = 0.01  # Learning rate scaling factor
 weight_decay = 0.0005
 # Save model checkpoint and validation intervals in stage 1
-save_epoch_intervals = 1
+save_epoch_intervals = 10
 # validation intervals in stage 2
 val_interval_stage2 = 1
 # The maximum checkpoints to keep.
@@ -194,8 +193,8 @@ last_transform = [
     dict(type='mmdet.RandomFlip', prob=0.5),
     dict(
         type='mmdet.PackDetInputs',
-        meta_keys=('img_id','img_path', 'ori_shape', 'img_shape', 'flip',
-                   'flip_direction')) #img_path 
+        meta_keys=('img_id', 'img_path', 'ori_shape', 'img_shape', 'flip',
+                   'flip_direction'))
 ]
 
 train_pipeline = [
